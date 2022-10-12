@@ -6,16 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KRISHNA</title>
     <link rel="stylesheet" href="form.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   </head>
-  <body>
-    <p id="end"></p>
+  <body class="body" id="page">
     <section id="formdata">
-      <form action="" name="myform" class="form">
+      <form
+        action=""
+        name="myform"
+        class="form"
+        onsubmit="return validateform()"
+      >
         <h1
           class="h-primary"
           style="
             border-style: solid;
-            border-radius: 8px;
+            border-radius: 6px;
             background-color: gainsboro;
             margin: 4px;
             border-width: 2px;
@@ -23,41 +28,213 @@
         >
           Registration
         </h1>
-        <input
-          type="text"
-          class="items"
-          name="name"
-          placeholder="Enter your name"
-        />
-        <p id="warn1"></p>
-        <input
-          type="number"
-          class="items"
-          name="phone"
-          placeholder="Phone Number"
-        />
-        <p id="warn2"></p>
-        <input type="email" name="email" class="items" placeholder="Email ID" />
-        <p id="warn3"></p>
-        <div id="radio">
-          <p>GENDER:</p>
-          Male<input type="radio" name="gender" id="gender" value="Male" />
-          Female<input type="radio" name="gender" id="gender" value="Female" />
-        </div>
-        <input type="password" placeholder="Enter your Password" />
-        <div>
+        <div class="items" id="name">
           <input
-            type="button"
-            id="submit"
-            value="SUBMIT"
-            onclick="return validateform()"
+            type="text"
+            class="items"
+            name="fname"
+            required
+            placeholder="Enter your name"
           />
-          <input type="reset" id="reset" value="RESET" />
+          <b><span class="error"> </span></b>
         </div>
+        <div class="items" id="age">
+          <input
+            type="number"
+            class="items"
+            name="fage"
+            placeholder="AGE"
+          />
+          <b><span class="error"> </span></b>
+        </div>
+        <div class="items" name="name" id="branch">
+          <select name="fbranch" class="items" id="branches"  >
+            <option value="Branch">Branch</option>
+            <option value="CSE">CSE</option>
+            <option value="IT">IT</option>
+            <option value="CSIT">CSIT</option>
+            <option value="CS">CS</option>
+            <option value="EN">EN</option>
+            <option value="ECE">ECE</option>
+            <option value="ME">ME</option>
+            <option value="CE">CE</option>
+
+          </select>
+          <b><span class="error"> </span></b>
+        </div>
+        <div class="items" id="phone">
+          <input
+            type="phone"
+            class="items"
+            required
+            name="fphone"
+            placeholder="Phone Number"
+          />
+          <b><span class="error"> </span></b>
+        </div>
+        <div class="items" id="email" >
+          <input
+            type="email"
+            name="femail"
+            required
+            class="items"
+            placeholder="Email ID"
+          />
+          <b><span class="error"></span></b>
+        </div>
+        <div class="items" id="dob">
+          <input
+            type="date"
+            class="items"
+            required
+            date
+            name="fdob"
+            placeholder="DOB"
+          />
+          <b><span class="error"></span></b>
+        </div>
+        <div>
+          <div id="radio" class="rad">
+            <p>GENDER:</p>
+            Male<input type="radio" name="fgender" required  id="gender" value="Male" />
+            Female<input
+              type="radio"
+              name="fgender"
+              id="gender"
+              required
+              value="Female"
+            />
+          </div>
+          <b><div class="error"></div></b>
+        </div>
+        <div class="items" name="name" id="slot">
+          <select name="fslot" class="items" id="slots"  >
+            <option value="select">Time Slot</option>
+            <option value="1st">9-12 am</option>
+            <option value="2nd">12-3 pm</option>
+            <option value="3rd">3-6 pm</option>
+
+          </select>
+          <b><span class="error"> </span></b>
+        </div>
+        <div class="items" id="pass1">
+          
+          <input
+            type="password"
+            class="items"
+            required
+            id="passwords"
+            name="fpass1"
+            placeholder="Enter Password"
+          />
+          <b><span class="error"></span></b>
+          
+          
+        
+        </div>
+        
+        <div class="items" id="pass2">
+          <input
+            type="password"
+            class="items"
+            required
+            name="fpass2"
+            placeholder="Confirm Password"
+          />
+          <b><span class="error"></span></b>
+        </div>
+        <span class="passError"></span></b>
+        <div>
+          <input type="submit" class="items" id="submit" value="SUBMIT" />
+          <input type="reset" class="items" id="reset" value="RESET" />
+         
+        </div>
+        <div id="success">
+          <b class="success1" ></b>
+        </div>
+        
       </form>
     </section>
   </body>
   <script>
     
+    function clearError() {
+      errors = document.getElementsByClassName("error");
+      for (let item of errors) {
+        item.innerHTML = "";
+      }
+    }
+    function seterror(id, error) {
+      element = document.getElementById(id);
+      element.getElementsByClassName("error")[0].innerHTML = error;
+    }
+    function validateform() {
+      var returnval = true;
+      clearError();
+      var name = document.forms["myform"]["fname"].value;
+      if (name.length < 3) {
+        seterror("name", "*Name is too short");
+        returnval = false;
+      }
+      var age=document.forms["myform"]["fage"].value;
+      if(age<18){
+          seterror("age","*Age should be above 18");
+          returnval=false;
+      }
+      var branch=document.forms["myform"]["fbranch"].value;
+      if(branch=="Branch"){
+        seterror("branch","*Select a valid branch");
+        returnval=false;
+      }
+      var slot=document.forms["myform"]["fslot"].value;
+      if(slot=="select"){
+        seterror("slot","*Select a valid slot");
+        returnval=false;
+      }
+      var email = document.forms["myform"]["femail"].value;
+      if (email.length > 15) {
+        seterror("email", "*Email is too long");
+        returnval = false;
+      }
+      var phone = document.forms["myform"]["fphone"].value;
+      if (phone.length != 10) {
+        seterror("phone", "*Phone number must be of 10 digits");
+        returnval = false;
+      }
+      if(document.getElementById('gender').checked == false){
+          seterror("gender","*Select atleast one option");
+          returnval = false;
+      }
+      var password1 = document.forms["myform"]["fpass1"].value;
+      if (password1.length <8) {
+        seterror("pass1", "*Password must contain atleast 8 characters");
+        returnval = false;
+      }
+      if(password1.search(/[0-9]/)==-1){
+          seterror("pass1","*Password must contain atleast 1 numeric character");
+          returnval=false;
+      }
+
+      if(password1.search(/[A-Z]/)==-1){
+          seterror("pass1","*Password must contain atleast 1 Uppercase letter");
+          returnval=false;
+      }
+      if(password1.search(/[@,#,$,&,*]/)==-1){
+          seterror("pass1","*Password must contain atleast 1 special character");
+          returnval=false;
+      }
+      var password2 = document.forms["myform"]["fpass2"].value;
+      if(password2!=password1){
+        seterror("pass2","*Password does not match")
+        returnval=false;
+      }
+      if(returnval==true){
+
+      element = document.getElementById("success");
+      element.getElementsByClassName("success1")[0].innerHTML = "SUBMITTED SUCCESSFULLY";
+
+      }
+      return returnval;
+    }
   </script>
 </html>
